@@ -1,207 +1,255 @@
-# Analytics Engineering Pipeline for an EdTech Bootcamp Startup (Databricks + Delta Lake) 
+# Analytics Engineering Pipeline for an EdTech Startup (Databricks + Delta Lake)
 
-## 1. Project Overview
-
-### Problem Statement
+## Project Overview
 
 EdTech startups need reliable analytics to understand:
 
-* learner sign-ups vs paid conversions
-* cohort performance
-* session attendance
-* revenue trends over time
+- learner sign-ups vs paid conversions  
+- cohort performance  
+- session attendance  
+- revenue trends over time  
 
-This project simulates a **realistic analytics engineering pipeline** for an EdTech bootcamp platform using **Databricks Free Edition**, focusing on **batch processing**, **clean data modeling**, and **business-ready metrics**.
+This project simulates a **realistic analytics engineering pipeline** for an EdTech bootcamp platform using **Databricks Free Edition**, with a focus on:
+
+- batch processing  
+- clean data modeling  
+- business-ready analytics tables  
 
 ### Objective
 
 Build an end-to-end analytics pipeline that:
 
-* ingests raw operational data
-* transforms it into clean, modeled datasets
-* produces analytics tables suitable for dashboards and decision-making
+- ingests raw operational data  
+- transforms it into clean, modeled datasets  
+- produces analytics tables suitable for dashboards and decision-making  
 
 ---
 
-## 2. Architecture Overview
+## High-Level Architecture (Medallion Pattern)
 
-### High-level Architecture (Medallion Pattern)
-
-```
 Raw Files (CSV / JSON)
-        ↓
+↓
 Bronze Delta Tables (raw ingestion)
-        ↓
+↓
 Silver Delta Tables (cleaned & modeled)
-        ↓
+↓
 Gold Tables (analytics & metrics)
-```
 
-> Even though **Unity Catalog is not available** in Databricks Free Edition, the **Medallion Architecture** is implemented using Delta tables in the workspace metastore.
 
-**Reference (Databricks official):**
-[https://docs.databricks.com/lakehouse/medallion.html](https://docs.databricks.com/lakehouse/medallion.html)
+Even though **Unity Catalog is not available** in Databricks Free Edition, the **Medallion Architecture** is implemented using Delta tables in the **workspace metastore**.
 
 ---
 
-## 3. Environment & Constraints
+## Environment & Constraints
 
 ### Databricks Environment
 
-* Databricks **Free Edition**
-* Workspace metastore (no Unity Catalog)
-* Batch processing only
-* Delta Lake tables
+- Databricks **Free Edition**
+- Workspace metastore (no Unity Catalog)
+- Batch processing only
+- Delta Lake tables
 
-**What is intentionally not used**
+### What Is Intentionally Not Used
 
-* Unity Catalog (not available in Free Edition)
-* Streaming (kept simple by design)
-* Production orchestration tools
-  
----
+- Unity Catalog (not available in Free Edition)
+- Streaming pipelines
+- Production orchestration tools
 
-## 4. Tech Stack
-
-| Layer         | Technology              |
-| ------------- | ----------------------- |
-| Compute       | Databricks Free Edition |
-| Storage       | Delta Lake              |
-| Processing    | Apache Spark            |
-| Languages     | Python (PySpark), SQL   |
-| Versioning    | GitHub                  |
-| Documentation | Markdown (README)       |
-
-### Why Delta Lake?
-
-Delta Lake provides:
-
-* ACID transactions
-* Schema enforcement
-* Time travel
-* Reliable batch analytics
-
-**Official docs:**
-[https://docs.databricks.com/delta/index.html](https://docs.databricks.com/delta/index.html)
+These constraints are documented intentionally and discussed as trade-offs rather than limitations.
 
 ---
 
-## 5. Data Sources (Simulated but Realistic)
+## Tech Stack
 
-The dataset represents a typical EdTech bootcamp workflow.
+| Area            | Choice                  |
+|-----------------|-------------------------|
+| Platform        | Databricks Free Edition |
+| Storage         | Delta Lake              |
+| Processing      | Apache Spark            |
+| Languages       | PySpark, SQL            |
+| Version Control | GitHub                  |
+| Documentation   | Markdown                |
 
-### Raw Input Tables
-
-* `users` — learner signups
-* `courses` — available bootcamps
-* `cohorts` — course batches
-* `enrollments` — user → cohort mapping
-* `payments` — payment transactions
-* `sessions_attended` — attendance logs
-
-> Data is manually uploaded as CSV/JSON to simulate real operational exports.
-
-**Databricks ingestion reference:**
-[https://docs.databricks.com/ingestion/file-upload.html](https://docs.databricks.com/ingestion/file-upload.html)
+Delta Lake is used for reliability, schema enforcement, and data versioning.
 
 ---
 
-## 6. Data Modeling Strategy
+## Dataset – EdTech Bootcamp Scenario
 
-### Bronze Layer
+The dataset represents a simplified but realistic EdTech workflow:
 
-**Purpose:** Raw ingestion with minimal transformation
+- users sign up  
+- users enroll in cohorts  
+- some users pay  
+- some users attend sessions  
+- some users drop off  
 
-Characteristics:
+### Raw Entities
 
-* Original schema preserved
-* Ingestion timestamp added
-* Stored as Delta tables
-* No joins
+- `users`  
+- `courses`  
+- `cohorts`  
+- `enrollments`  
+- `payments`  
+- `sessions_attended`  
 
-Best practice reference:
-[https://docs.databricks.com/ingestion/bronze-layer.html](https://docs.databricks.com/ingestion/bronze-layer.html)
-
----
-
-### Silver Layer
-
-**Purpose:** Clean, analytics-ready data
-
-Transformations:
-
-* Type casting
-* Null handling
-* Deduplication
-* Business-key normalization
-* Fact & dimension modeling
-
-Tables:
-
-* `dim_users`
-* `dim_courses`
-* `fact_enrollments`
-* `fact_payments`
-* `fact_attendance`
-
-Reference (Data modeling on Databricks):
-[https://docs.databricks.com/sql/language-manual/sql-ref-datamodeling.html](https://docs.databricks.com/sql/language-manual/sql-ref-datamodeling.html)
+The dataset is **synthetic, but structurally representative of real operational data**, designed to surface common analytics challenges such as joins, deduplication, and funnel analysis.
 
 ---
 
-### Gold Layer
+## Layer Responsibilities
 
-**Purpose:** Business metrics & KPIs
+### Bronze Layer – Raw Ingestion
 
-Examples:
+**Purpose**
+- Preserve source data as close to raw form as possible  
+- Enable reprocessing if downstream logic changes  
 
-* Enrollment → payment conversion rate
-* Cohort completion rate
-* Monthly revenue
-* Attendance vs payment correlation
-
-Gold tables are created primarily using **SQL**, reflecting how analytics teams consume data.
-
----
-
-## 7. Data Quality & Reliability
-
-Basic data quality checks include:
-
-* Non-null primary keys
-* Valid date ranges
-* Deduplication logic
-* Row count sanity checks between layers
-
-> Advanced data quality frameworks (e.g., expectations frameworks) are **out of scope** for this project due to Free Edition limitations.
-
-Databricks data quality concepts:
-[https://docs.databricks.com/data-governance/data-quality.html](https://docs.databricks.com/data-governance/data-quality.html)
+**Characteristics**
+- Explicit schema definitions  
+- Minimal transformations  
+- Ingestion timestamp added  
+- No joins or business logic  
 
 ---
 
-## 8. Repository Structure
+### Silver Layer – Clean & Modeled Data
+
+**Purpose**
+- Create reliable, analytics-ready datasets  
+- Serve as the single source of truth for analytics  
+
+**Transformations**
+- Type casting and normalization  
+- Deduplication using business keys  
+- Referential integrity across entities  
+- Separation of fact and dimension tables  
+
+---
+
+### Gold Layer – Business Metrics
+
+**Purpose**
+- Provide business-facing metrics and KPIs  
+- Optimize data for analytical consumption  
+
+**Characteristics**
+- Pre-aggregated metrics  
+- SQL-first design  
+- No complex transformation logic  
+
+---
+
+## Data Modeling Approach
+
+The project follows a **dimensional modeling** approach commonly used in analytics engineering.
+
+- **Dimensions** describe entities such as users, courses, and cohorts  
+- **Fact tables** capture events and transactions such as enrollments, payments, and attendance  
+
+Each fact table has a clearly defined **grain**, documented in the transformation logic and code comments.
+
+---
+
+## Code and Data Storage Decisions
+
+### Code
+
+All code is version-controlled in GitHub, including:
+
+- notebooks  
+- PySpark transformation logic  
+- SQL analytics queries  
+- documentation  
+
+Databricks Repos is used to sync the workspace with GitHub, ensuring changes are tracked and reviewable.
+
+---
+
+### Data
+
+Datasets are deliberately **not stored in GitHub**.
+
+- raw files are uploaded to DBFS  
+- processed data is stored as Delta tables  
+
+This avoids Git LFS issues and follows standard data platform practices, where data versioning is handled by the storage layer rather than source control.
+
+---
+
+## How Raw Data Is Loaded
+
+Raw CSV / JSON files are uploaded manually into DBFS using the Databricks UI.
+
+
+### Example Directory Structure
 
 ```
-/
+dbfs:/FileStore/data/
+├── users.csv
+├── courses.csv
+├── cohorts.csv
+├── enrollments.csv
+├── payments.csv
+└── sessions_attended.csv
+```
+
+---
+
+## Repository Structure
+
+```/
 ├── notebooks/
-│   ├── bronze_ingestion/
-│   ├── silver_transformations/
-│   └── gold_metrics/
+│ ├── bronze_ingestion/
+│ ├── silver_transformations/
+│ └── gold_metrics/
 ├── data/
-│   └── raw_files/
+│ └── sample/ # tiny example files only
 ├── docs/
-│   └── architecture.md
+│ └── architecture.md
 ├── README.md
 ```
+---
 
-> Notebooks are kept thin and readable, focusing on transformation logic rather than experimentation.
+## What This Project Demonstrates
+
+- Designing analytics pipelines under real-world constraints  
+- Applying Medallion Architecture without Unity Catalog  
+- Using Delta Lake for reliable batch analytics  
+- Separating transformation logic from analytics consumption  
+- Communicating trade-offs clearly and transparently  
 
 ---
 
-## 9. How to Run (High Level)
+## How to Run (High Level)
 
-1. Upload raw data files to Databricks workspace
-2. Run Bronze ingestion notebooks
-3. Execute Silver transformation notebooks
-4. Query Gold tables using SQL
+1. Upload raw data files to DBFS  
+2. Run Bronze ingestion notebooks  
+3. Run Silver transformation notebooks  
+4. Query Gold tables using SQL  
+
+---
+
+## Future Improvements
+
+If moved to a paid Databricks environment:
+
+- enable Unity Catalog for governance  
+- introduce streaming ingestion  
+- add automated workflows  
+- integrate dbt for transformations  
+- implement formal data quality checks
+
+---  
+
+## References:
+- https://docs.databricks.com/lakehouse/medallion.html
+- https://docs.databricks.com/delta/index.html
+- https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/
+- https://docs.databricks.com/repos/index.html
+- https://docs.databricks.com/ingestion/file-upload.html
+- https://docs.databricks.com/dbfs/index.html  
+- https://docs.databricks.com/delta/history.html  
+- https://docs.databricks.com/data-governance/unity-catalog/index.html
+
+
