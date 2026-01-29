@@ -1,0 +1,41 @@
+user_id,email,signup_ts,signup_source,country,city
+U0022,noah.jones22@example.com,2025-09-09 15:28:00,organic,UK,London
+U0018,ivy.fernando18@example.com,2025-09-11 14:09:00,organic,UK,Birmingham
+U0032,nina.harris32@example.com,2025-09-11 16:06:00,organic,UK,Leeds
+U0035,hana.taylor35@example.com,2025-09-13 08:25:00,referral,Sri Lanka,Colombo
+U0025,ella.silva25@example.com,2025-09-16 00:29:00,referral,UK,Leeds
+U0010,lily.khan10@example.com,2025-09-17 01:26:00,organic,UK,Birmingham
+U0036,sophia.patel36@example.com,2025-09-17 09:09:00,instagram,UK,Leeds
+U0020,arjun.taylor20@example.com,2025-09-18 07:54:00,instagram,Sri Lanka,Colombo
+U0019,arjun.patel19@example.com,2025-10-04 18:00:00,organic,UK,Hitchin
+U0040,arjun.taylor40@example.com,2025-10-05 02:26:00,linkedin_ad,UK,Manchester
+U0009,maya.gomes9@example.com,2025-10-10 01:31:00,google_ad,Sri Lanka,Galle
+U0027,leo.dias27@example.com,2025-10-17 13:44:00,instagram,UK,Hitchin
+U0021,milan.clark21@example.com,2025-10-21 21:25:00,referral,UK,Birmingham
+U0001,luca.fernando1@example.com,2025-10-22 05:03:00,organic,UK,Manchester
+U0005,amir.ali5@example.com,2025-10-24 13:34:00,organic,UK,Leeds
+U0031,aisha.wijesinghe31@example.com,2025-10-31 17:12:00,instagram,UAE,Abu Dhabi
+U0037,lily.walker37@example.com,2025-11-01 06:59:00,referral,UK,Leeds
+U0015,lily.silva15@example.com,2025-11-03 10:13:00,linkedin_ad,UK,Leeds
+U0003,ivy.khan3@example.com,2025-11-10 22:03:00,linkedin_ad,UK,Leeds
+U0023,oliver.perera23@example.com,2025-11-12 13:34:00,organic,UK,London
+U0004,arjun.smith4@example.com,2025-11-14 03:25:00,organic,UK,Hitchin
+U0006,oliver.gomes6@example.com,2025-11-14 05:12:00,referral,UK,London
+U0012,luca.harris12@example.com,2025-11-17 00:37:00,linkedin_ad,UK,London
+U0024,maya.jones24@example.com,2025-11-18 21:09:00,instagram,UAE,Abu Dhabi
+U0007,arjun.smith7@example.com,2025-11-19 15:31:00,instagram,UK,Manchester
+U0011,hana.smith11@example.com,2025-11-25 11:48:00,instagram,Sri Lanka,Galle
+U0028,zara.khan28@example.com,2025-11-29 17:33:00,referral,UK,Leeds
+U0013,ethan.singh13@example.com,2025-11-30 06:04:00,organic,Sri Lanka,Jaffna
+U0030,ivy.rahman30@example.com,2025-12-04 16:12:00,instagram,UK,London
+U0026,oliver.taylor26@example.com,2025-12-04 17:30:00,linkedin_ad,UK,London
+U0029,mila.clark29@example.com,2025-12-10 01:21:00,instagram,Sri Lanka,Kandy
+U0038,aisha.perera38@example.com,2025-12-13 08:41:00,organic,Sri Lanka,Kandy
+U0039,hana.jones39@example.com,2025-12-15 15:01:00,organic,UK,Leeds
+U0017,amir.abey17@example.com,2025-12-21 02:17:00,linkedin_ad,UAE,Abu Dhabi
+U0014,zara.rahman14@example.com,2025-12-24 06:22:00,organic,UK,Leeds
+U0033,ella.walker33@example.com,2025-12-26 04:53:00,organic,Ireland,Cork
+U0034,maya.silva34@example.com,2025-12-26 21:50:00,linkedin_ad,UK,Leeds
+U0002,arjun.smith2@example.com,2025-12-27 01:13:00,organic,UK,London
+U0016,jay.rahman16@example.com,2025-12-28 00:05:00,organic,UK,Manchester
+U0008,milan.gomes8@example.com,2025-12-28 23:23:00,organic,Sri Lanka,Kandy

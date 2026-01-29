@@ -1,0 +1,5 @@
+cohort_id,course_id,start_date,end_date,delivery_mode,capacity
+H001,C001,2025-10-06,2025-11-03,Online,60
+H002,C001,2025-11-03,2025-12-01,Online,60
+H003,C002,2025-10-13,2025-11-10,Online,50
+H004,C003,2025-11-17,2025-12-15,Hybrid,35
