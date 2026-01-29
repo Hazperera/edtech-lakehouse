@@ -1,0 +1,4 @@
+course_id,course_name,level,list_price_gbp
+C001,SQL for Data Analytics,Beginner,299
+C002,Power BI Zero-to-Hero,Beginner,349
+C003,Analytics Engineering (dbt),Intermediate,499
